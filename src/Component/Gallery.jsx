@@ -26,7 +26,7 @@ const Gallery = ({ searchQuery }) => {
     fetch(`https://picsum.photos/v2/list?page=${currentPage}&limit=${IMAGES_PER_PAGE}`)
       .then((res) => res.json())
       .then((data) => {
-        // Shuffle images only on initial load (or every page load)
+        // Shuffle images on page load
         setImages(shuffleArray(data));
       })
       .catch((err) => console.error(err));
@@ -41,11 +41,10 @@ const Gallery = ({ searchQuery }) => {
       <h1 className="text-3xl font-bold text-center mb-6">Image Gallery</h1>
 
       {/* Masonry Layout */}
-      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
-        {filteredImages.map((img) => (
-          <Card key={img.id} img={img} />
-        ))}
-        {filteredImages.length === 0 && (
+      <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+        {filteredImages.length > 0 ? (
+          filteredImages.map((img) => <Card key={img.id} img={img} />)
+        ) : (
           <p className="col-span-full text-center text-gray-500 mt-4">
             No images found.
           </p>

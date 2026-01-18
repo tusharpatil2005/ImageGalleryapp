@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ import navigate
-import logo from '../assets/logo.jpg';
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.jpg";
+import SearchBar from "./SearchBar";
 
 const Navbar = ({ searchQuery, setSearchQuery }) => {
   const [scrolled, setScrolled] = useState(false);
-  const navigate = useNavigate(); // ✅ get navigate function
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -19,7 +20,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
         rounded-none lg:rounded-full ${scrolled ? "shadow-lg" : "shadow-none"}`}
       >
         <div className="flex items-center justify-between px-6 py-3 gap-4">
-          
+
           {/* Logo */}
           <div className="flex items-center gap-2">
             <img src={logo} alt="ImageGallery" className="w-9 h-9 rounded-full" />
@@ -28,37 +29,24 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
 
           {/* Desktop Search */}
           <div className="hidden md:flex flex-1 justify-center">
-            <input
-              type="text"
-              placeholder="Search images..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-2/3 px-4 py-2 rounded-full outline-none border border-white/40
-              bg-white text-black focus:ring-2 focus:ring-white"
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              className="w-2/3"
             />
           </div>
 
-          {/* Desktop Login Button */}
-          <div className="hidden sm:flex items-center">
-            <button
-              onClick={() => navigate("/login")} // ✅ navigate to login page
-              className="px-4 py-2 rounded-full bg-white text-black border border-gray-300 hover:bg-gray-100 transition"
-            >
-              Login
-            </button>
-          </div>
+          
 
           {/* Mobile Search */}
           <div className="md:hidden flex-1 px-4">
-            <input
-              type="text"
-              placeholder="Search images..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-2 rounded-full outline-none border border-white/40
-              bg-white text-black focus:ring-2 focus:ring-white"
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              className="w-full"
             />
           </div>
+
         </div>
       </div>
     </nav>
